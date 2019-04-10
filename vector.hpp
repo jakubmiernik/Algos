@@ -1,4 +1,4 @@
-template<typename T>
+template<class T>
 class vector {
     T* buffer;
     int bufferSize;
@@ -41,4 +41,7 @@ public:
     int size() {
         return vectorSize;
     }
+	void clear() {
+		vectorSize = 0;
+	}
 };
