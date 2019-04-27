@@ -1,7 +1,7 @@
 #include <iostream>
 #include <random>
 
-#include "hashMap.hpp"
+#include "structs/hashMap.hpp"
 #include <map>
 
 int random(int from, int to) {
