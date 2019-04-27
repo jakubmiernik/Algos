@@ -1,4 +1,5 @@
 #include "vector.hpp"
+#pragma once
 
 template<typename T_K, typename T_V>
 class BruteMap {
