@@ -136,6 +136,53 @@ void mergeSort(std::vector<T> &input, int start, int end)
     merge(input, start, mid, end);
 }
 
+// ************ HEAP SORT ******************//
+constexpr int leftChild(int n) { return 2 * n + 1; }
+constexpr int rightChild(int n) { return 2 * n + 2; }
+
+template <typename T>
+void heapify(std::vector<T> &input, int size, int idx)
+{
+    int max_idx = idx;
+    int left = leftChild(idx);
+    int right = rightChild(idx);
+    if (left < size && input[left] > input[max_idx])
+    {
+        max_idx = left;
+    }
+    if (right < size && input[right] > input[max_idx])
+    {
+        max_idx = right;
+    }
+
+    if (max_idx != idx)
+    {
+        swap(input, max_idx, idx);
+        heapify(input, size, max_idx);
+    }
+}
+
+template <typename T>
+void buildHeap(std::vector<T> &input, int size)
+{
+    for (int ii = size / 2 - 1; ii >= 0; ii--)
+    {
+        heapify(input, size, ii);
+    }
+}
+
+template <typename T>
+void heapSort(std::vector<T> &input)
+{
+    buildHeap(input, input.size());
+
+    for (int ii = 0; ii < input.size(); ii++)
+    {
+        swap(input, 0, input.size() - 1 - ii);
+        heapify(input, input.size() - 1 - ii, 0);
+    }
+}
+
 // ************ MAIN ******************//
 
 using std::chrono::duration;
@@ -147,6 +194,7 @@ int main()
 {
     auto data = generateData<int>(1000);
     auto data2 = data;
+    auto data3 = data;
 
     auto t1 = high_resolution_clock::now();
     mergeSort(data, 0, data.size() - 1);
@@ -156,10 +204,16 @@ int main()
     quickSort(data2, 0, data2.size() - 1);
     auto t4 = high_resolution_clock::now();
 
+    auto t5 = high_resolution_clock::now();
+    heapSort(data3);
+    auto t6 = high_resolution_clock::now();
+
     std::cout << "MergeSort time " << duration_cast<microseconds>(t2 - t1).count() << "us\n";
     std::cout << "qSort time " << duration_cast<microseconds>(t4 - t3).count() << "us\n";
+    std::cout << "heapSort time " << duration_cast<microseconds>(t6 - t5).count() << "us\n";
 
     testSort(data);
     testSort(data2);
-    // printData(data);
+    testSort(data3);
+    // printData(data3);
 }
