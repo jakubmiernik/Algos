@@ -33,7 +33,7 @@ std::array<int, NN> dijkstra(int start)
         val = false;
     }
 
-    dist[0] = 0;
+    dist[start] = 0;
     queue.push({0, start});
     while (queue.size() > 0)
     {
